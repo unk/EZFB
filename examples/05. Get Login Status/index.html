@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Get Login Status</title>
+		<script type="text/javascript" src="../../src/EZFB.min.js"></script>
+	</head>
+	<body>
+		<div id="status">not_ready</div>
+		<button id="logout">Logout</button>
+		<button id="login">Login</button>
+		
+		<script type="text/javascript">
+			var status = document.getElementById( "status" );
+			
+			EZFB.appInit( "YOUR_APP_ID" );
+			
+			// add callback
+			EZFB.loginStatus( function() {
+				status.innerHTML = EZFB.getLoginStatus();
+			} );
+			document.getElementById( "logout" ).onclick = function() {
+				FB.logout( function() {
+					// FB.getLoginStatus
+					EZFB.callLoginStatus();
+				} );
+			}
+			document.getElementById( "login" ).onclick = function() {
+				EZFB.login( "user_likes", function( $response ) {
+					EZFB.callLoginStatus();
+				} );
+			}
+		</script>
+	</body>
+</html>
