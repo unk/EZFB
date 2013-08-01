@@ -12,30 +12,30 @@
  */
 ;( function() {
 	if( !window.EZFB ) {
-		
-		/*
-		
-			Private Variables
-			
-		*/
-		
+
+		/* ====================================================================================================
+
+		 Private Variables
+
+		 ==================================================================================================== */
+
 		var _isInit = false;
 		var _appId;
 		var _loginStatus = "not_ready";
 		var _userId;
 		var _accessToken;
-		
+
 		var _asyncInitHandlerList = [];
 		var _likeHandlerList = [];
 		var _unlikeHandlerList = [];
 		var _loginStatusHandlerList = [];
-		
-		/*
-		
-			Private Functions ( and Handlers )
-		
-		*/
-		
+
+		/* ====================================================================================================
+
+		 Private Functions ( and Handlers )
+
+		 ==================================================================================================== */
+
 		function applyHandlerList( $list /*, $params */ ) {
 			var len = $list.length;
 			var $params;
@@ -49,7 +49,7 @@
 				( $list[ i ] ).apply( null, $params );
 			}
 		};
-		
+
 		function removeHandler( $list, $handler ) {
 			var len = $list.length;
 			for( var i = 0; i < len; i++ ) {
@@ -60,7 +60,7 @@
 			}
 			return false;
 		};
-		
+
 		function addEvents() {
 			if ( document.addEventListener ) {
 				document.addEventListener( "DOMContentLoaded", createFBML );
@@ -68,7 +68,7 @@
 				document.attachEvent( "onreadystatechange", createFBML );
 			}
 		};
-		
+
 		function removeEvents() {
 			if ( document.addEventListener ) {
 				document.removeEventListener( "DOMContentLoaded", createFBML );
@@ -76,53 +76,53 @@
 				document.detachEvent( "onreadystatechange", createFBML );
 			}
 		};
-		
+
 		function createFBML() {
 			if ( document.addEventListener || event.type === "load" || document.readyState === "complete" ) {
 				removeEvents();
-									
+
 				var script = document.createElement( "script" );
 				script.innerHTML = '(function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/ko_KR/all.js"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk"));';
 				document.head.insertBefore( script, document.head.firstChild );
-				
+
 				if( !document.getElementById( "fb-root" ) ) {
 					var root = document.createElement( "div" );
 					root.setAttribute( "id", "fb-root" );
 					document.body.insertBefore( root, document.body.firstChild );
 				}
-				
+
 				if( window.fbAsyncInit ) {
 					_isInit = true;
 				}
 				else {
 					window.fbAsyncInit = function() {
 						_isInit = true;
-						
+
 						applyHandlerList( _asyncInitHandlerList );
 					}
 				}
-				
-				EZFB.init( function() {					
+
+				EZFB.init( function() {
 					FB.Event.subscribe( "edge.create", subscribeHandler );
 					FB.Event.subscribe( "edge.remove", unsubscribeHandler );
 				} );
 			}
 		};
-		
+
 		function subscribeHandler( $response ) {
 			applyHandlerList( _likeHandlerList, [ $response ] );
 		};
-		
+
 		function unsubscribeHandler( $response ) {
 			applyHandlerList( _unlikeHandlerList, [ $response ] );
 		};
-		
+
 		window.EZFB = ( {
-			/*
-			
-				Initialize
-			
-			*/
+			/* ====================================================================================================
+
+			 Initialize
+
+			 ==================================================================================================== */
 			_init: function() {
 				if( document.body ) {
 					createFB();
@@ -147,7 +147,7 @@
 					var $authResponse = arguments[ 6 ] ? arguments[ 6 ] : true;
 					var $frictionlessRequests = arguments[ 7 ] ? arguments[ 7 ] : false;
 					var $hideFlashCallback = arguments[ 8 ] ? arguments[ 8 ] : null;
-					
+
 					opts = {
 						appId : $appIdOrOptions,
 						cookie : $cookie,
@@ -159,10 +159,10 @@
 						frictionlessRequests : $frictionlessRequests,
 						hideFlashCallback : $hideFlashCallback
 					};
-					
+
 					_appId = $appIdOrOptions;
 				}
-				
+
 				if( _isInit ) {
 					FB.init( opts );
 				}
@@ -173,14 +173,14 @@
 				}
 				this.init( this.update );
 				this.init( this.callLoginStatus );
-				
+
 				return this;
 			},
-			/*
-			
-				Event Methods
-				
-			*/
+			/* ====================================================================================================
+
+			 Event Methods
+
+			 ==================================================================================================== */
 			bind: function( $eventName, $handler ) {
 				$arr = $eventName.split( " " );
 				var len = $arr.length;
@@ -239,17 +239,19 @@
 				removeHandler( _loginStatusHandlerList, $handler );
 				return this;
 			},
-			/*
-			
-				Util Methods
-				
-			*/
+			/* ====================================================================================================
+
+			 Util Methods
+
+			 ==================================================================================================== */
 			update: function() {
 				FB.XFBML.parse();
+				return this;
 			},
 			canvasAutosize: function() {
 				FB.Canvas.setSize();
 				FB.Canvas.setAutoGrow();
+				return this;
 			},
 			callLoginStatus: function() {
 				FB.getLoginStatus( function( $response ) {
@@ -266,9 +268,10 @@
 						_userId = null;
 						_accessToken = null;
 					}
-					
+
 					applyHandlerList( _loginStatusHandlerList, [ $response ] );
 				} );
+				return this;
 			},
 			getLoginStatus: function() {
 				return _loginStatus;
@@ -288,9 +291,10 @@
 					url = url.replace( "%a", _appId );
 					url = url.replace( "%u", $handlerOrRedirectUrl );
 					url = url.replace( "%s", $scope );
-					
+
 					window.top.location.href = url;
 				}
+				return this;
 			}
 		} )._init();
 	}
