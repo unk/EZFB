@@ -1,5 +1,5 @@
 /*!
- * EZFB v0.1
+ * EZFB v0.0.2
  * http://grotesq.com
  *
  * Author : Kim Naram ( a.k.a. Unknown )
@@ -8,7 +8,7 @@
  * Copyright 2007-2013 The GrotesQ
  * Released under the MIT license
  *
- * Date: 2013-06-06 16:20
+ * Date: 2013-08-13 15:16
  */
 ;( function() {
 	if( !window.EZFB ) {
@@ -81,14 +81,27 @@
 			if ( document.addEventListener || event.type === "load" || document.readyState === "complete" ) {
 				removeEvents();
 
+				var head = document.getElementsByTagName( "head" )[ 0 ];
 				var script = document.createElement( "script" );
-				script.innerHTML = '(function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/ko_KR/all.js"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk"));';
-				document.head.insertBefore( script, document.head.firstChild );
+				script.text = '(function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/ko_KR/all.js"; fjs.parentNode.insertBefore(js, fjs); }(document, "script", "facebook-jssdk"));';
+				if( head.firstChild ) {
+					head.insertBefore( script, head.firstChild );
+				}
+				else {
+					head.appendChild( script );
+				}
+				
 
 				if( !document.getElementById( "fb-root" ) ) {
 					var root = document.createElement( "div" );
 					root.setAttribute( "id", "fb-root" );
-					document.body.insertBefore( root, document.body.firstChild );
+					if( document.body.firstChild ) {
+						document.body.insertBefore( root, document.body.firstChild );
+					}
+					else {
+						document.body.appendChild( root );
+					}
+					
 				}
 
 				if( window.fbAsyncInit ) {
