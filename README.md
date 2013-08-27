@@ -1,6 +1,6 @@
-EZFB 0.0.2
+EZFB 0.0.3
 ====
-Last modified : 2013-08-13
+Last modified : 2013-08-27
 
 
 Site - http://grotesq.com/ezfb/
