@@ -556,6 +556,7 @@
 						EZFB.event.bind( "me", $listener );
 					}
 					FB.api( "/me", function( $response ) {
+						EZFB.user = $response;
 						applyListeners( "me", $response );
 					} );
 					return EZFB;
