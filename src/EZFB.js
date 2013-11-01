@@ -1,5 +1,5 @@
 /*!
- * EZFB v0.0.3
+ * EZFB v0.0.4
  * http://grotesq.com
  *
  * Author : Kim Naram ( a.k.a. Unknown )
@@ -8,9 +8,37 @@
  * Copyright 2007-2013 The GrotesQ
  * Released under the MIT license
  *
- * Date: 2013-08-27 18:14
+ * Date: 2013-11-01 11:56
  */
-;( function() {
+;if (!Array.prototype.indexOf) {
+	Array.prototype.indexOf = function (searchElement , fromIndex) {
+		var i,
+			pivot = (fromIndex) ? fromIndex : 0,
+			length;
+
+		if (!this) {
+			throw new TypeError();
+		}
+
+		length = this.length;
+
+		if (length === 0 || pivot >= length) {
+			return -1;
+		}
+
+		if (pivot < 0) {
+			pivot = length - Math.abs(pivot);
+		}
+
+		for (i = pivot; i < length; i++) {
+			if (this[i] === searchElement) {
+				return i;
+			}
+		}
+		return -1;
+	};
+}
+( function() {
 	if( !window.EZFB ) {
 		/* ====================================================================================================
 
