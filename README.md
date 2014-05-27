@@ -8,7 +8,7 @@ Last modified : 2014-05-27
 2. [Usage](#usage)
 	- [시작하기](#%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0)
 	- [초기화이벤트](#%EC%B4%88%EA%B8%B0%ED%99%94-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
-	- [페이스북 로그인 하기](%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%B6%81-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%95%98%EA%B8%B0)
+	- [페이스북 로그인 하기](#%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%B6%81-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%ED%95%98%EA%B8%B0)
 	- [좋아요 버튼 이벤트 활용하기](#%EC%A2%8B%EC%95%84%EC%9A%94-%EB%B2%84%ED%8A%BC-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0)
 	- [여러개의 이벤트 동시에 등록, 해제하기](#%EC%97%AC%EB%9F%AC%EA%B0%9C%EC%9D%98-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%8F%99%EC%8B%9C%EC%97%90-%EB%93%B1%EB%A1%9D-%ED%95%B4%EC%A0%9C%ED%95%98%EA%B8%B0)
 	- [메소드 체인](#%EB%A9%94%EC%86%8C%EB%93%9C-%EC%B2%B4%EC%9D%B8)
