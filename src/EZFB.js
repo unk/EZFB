@@ -1,5 +1,5 @@
 /*!
- * EZFB v0.0.5
+ * EZFB v0.0.6
  * http://grotesq.com
  *
  * Author : Kim Naram ( a.k.a. Unknown )
@@ -8,7 +8,7 @@
  * Copyright 2007-2014 The GrotesQ
  * Released under the MIT license
  *
- * Date: 2014-05-27 11:40
+ * Date: 2014-05-29 14:39
  */
 ;'use strict';
 if (!Array.prototype.indexOf) {
@@ -54,6 +54,7 @@ if (!Array.prototype.indexOf) {
 	var document = $document;
 
 	var _isInit = false;
+	var _hasLoginStatusCallback = false;
 	var _lang = 'en_US';
 	var _appId;
 	var _opts;
@@ -447,6 +448,11 @@ if (!Array.prototype.indexOf) {
 		}
 		var list = _eventList[ $eventName ];
 		if( list.indexOf( $handler ) < 0 ) {
+			for( var i = 0, len = list.length; i < len; i++ ) {
+				if( list[ i ].toString() == $handler.toString() ) {
+					return;
+				}
+			}
 			list.push( $handler );
 		}
 	};
@@ -605,7 +611,10 @@ if (!Array.prototype.indexOf) {
 				event.on( 'loginStatus', $listener );
 			}
 
-			FB.getLoginStatus( _getLoginStatusHandler );
+			if( !_hasLoginStatusCallback ) {
+				_hasLoginStatusCallback = true;
+				FB.getLoginStatus( _getLoginStatusHandler );
+			}
 			return app;
 		},
 		me: function( $listener ) {
@@ -678,25 +687,26 @@ if (!Array.prototype.indexOf) {
 	};
 
 	event = app.event = {
-		bind: function( $eventName, $listener ) {
+		on: function( $eventName, $listener ) {
 			var $events = $eventName.split( ' ' );
 			_each( $events, function( $event ) {
+				console.log( 'on: ' + $event );
 				_addListener( $event, $listener );
 			} );
 			return this;
 		},
-		on: function( $eventName, $listener ) {
-			return this.bind( $eventName, $listener );
+		bind: function( $eventName, $listener ) {
+			return this.on( $eventName, $listener );
 		},
-		unbind: function( $eventName, $listener ) {
+		off: function( $eventName, $listener ) {
 			var $events = $eventName.split( ' ' );
 			_each( $events, function( $event ) {
 				_removeListener( $event, $listener );
 			} );
 			return this;
 		},
-		off: function( $eventName, $listener ) {
-			return this.unbind( $eventName, $listener );
+		unbind: function( $eventName, $listener ) {
+			return this.off( $eventName, $listener );
 		},
 		init: function( $listener ) {
 			if( _isInit ) {
