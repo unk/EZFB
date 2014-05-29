@@ -1,4 +1,4 @@
-#EZFB 0.0.5
+#EZFB 0.0.6
 
 Last modified : 2014-05-27
 
