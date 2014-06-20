@@ -621,7 +621,7 @@ if (!Array.prototype.indexOf) {
 			if( $listener ) {
 				event.on( 'me', $listener );
 			}
-			FB.api( '/me', function( $response ) {
+			FB.api( '/me?locale=' + _lang, function( $response ) {
 				if( $response.error ) {
 					app.user = null;
 				}
